@@ -1,6 +1,6 @@
 <!--构建整个页面的布局-->
 <template>
-    <el-container>
+    <el-container class="indexPage">
       <el-header class="logo-header">
         <el-row>
           <el-col :span="8"><!--左边logo-->
@@ -27,7 +27,18 @@
       </el-header>
         <el-container class="main">
             <el-aside id="aside-menu">
-
+              <el-menu>
+                <el-submenu index="1">
+                  <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span slot="title">导航一</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="1-1">选项一</el-menu-item>
+                    <el-menu-item index="1-1">选项二</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+              </el-menu>
             </el-aside>
             <el-container class="main-content">
                 <el-main></el-main>
@@ -101,6 +112,10 @@
     }
 </script>
 <style>
+  .indexPage{
+    width: 100%;
+    height: 100%;
+  }
   .logo-header{
     width:100%;
     height:75px !important;
@@ -149,7 +164,7 @@
   .el-upload-list__item:first-child{
     margin-top:5px;
   }
-  .mainr{
+  .main{
     position:relative;
   }
   #aside-menu{
@@ -159,4 +174,10 @@
     bottom: 0;
     width:200px;
   }
+  #aside-menu{
+    width:200px !important;
+    background: rgba(0,0,0,.06);
+    background-size: cover;
+  }
+
 </style>

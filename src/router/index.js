@@ -8,7 +8,7 @@ import Menu from '@/components/systemPage/menu'
 import Organization from '@/components/systemPage/organization'
 import Role from '@/components/systemPage/role'
 import User from '@/components/systemPage/user'
-Vue.use(Router)
+Vue.use(Router);
 //IndexPage是整体框架的组件 嵌套的路由
 export default new Router({
   routes: [
