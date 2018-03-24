@@ -25,9 +25,11 @@
           </el-col>
         </el-row>
       </el-header>
-        <el-container>
-            <el-aside></el-aside>
-            <el-container>
+        <el-container class="main">
+            <el-aside id="aside-menu">
+
+            </el-aside>
+            <el-container class="main-content">
                 <el-main></el-main>
                 <el-footer></el-footer>
             </el-container>
@@ -74,7 +76,7 @@
   import ElButton from "../../node_modules/element-ui/packages/button/src/button";
     export default{
       components: {ElButton, ElUpload, ElCol, ElRow, ElDialog},
-      name:'Home',
+      name:'IndexPage',
         data(){
             return {
               uploadUrl:"https://jsonplaceholder.typicode.com/posts/",
@@ -85,10 +87,15 @@
                 fileList:[]
             }
         },
+      created(){
+        this.$http.get('../../static/json/menu.json').then((res)=>{
+
+
+        })
+      },
       methods:{
         handleSuccess(response, file, fileList){
           this.imgFlag = false
-          console.log("fffff")
         }
       }
     }
@@ -141,5 +148,15 @@
   }
   .el-upload-list__item:first-child{
     margin-top:5px;
+  }
+  .mainr{
+    position:relative;
+  }
+  #aside-menu{
+    position: absolute;
+    left:0;
+    top: 0;
+    bottom: 0;
+    width:200px;
   }
 </style>
