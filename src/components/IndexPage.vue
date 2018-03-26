@@ -27,21 +27,24 @@
       </el-header>
         <el-container class="main">
             <el-aside id="aside-menu">
-              <el-menu>
-                <el-submenu index="1">
-                  <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">导航一</span>
-                  </template>
-                  <el-menu-item-group>
-                    <el-menu-item index="1-1">选项一</el-menu-item>
-                    <el-menu-item index="1-1">选项二</el-menu-item>
-                  </el-menu-item-group>
-                </el-submenu>
+              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)">
+                <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
+                  <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf">
+                      <template slot="title">
+                        <i :class="item.iconCls"></i>
+                        <span slot="title">{{item.name}}</span>
+                      </template>
+                      <el-menu-item :class="" v-for="(child,index) in  item.children" :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
+                  </el-submenu>
+                  <el-menu-item v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
+                    <i :class="item.iconCls"></i>
+                    {{item.children[0].name}}
+                   </el-menu-item>
+                </template>
               </el-menu>
             </el-aside>
             <el-container class="main-content">
-                <el-main></el-main>
+                <el-main> <router-view/></el-main>
                 <el-footer></el-footer>
             </el-container>
         </el-container>
@@ -85,8 +88,9 @@
   import ElCol from "element-ui/packages/col/src/col";
   import ElUpload from "../../node_modules/element-ui/packages/upload/src/index";
   import ElButton from "../../node_modules/element-ui/packages/button/src/button";
+  import ElSubmenu from "../../node_modules/element-ui/packages/menu/src/submenu";
     export default{
-      components: {ElButton, ElUpload, ElCol, ElRow, ElDialog},
+      components: {ElSubmenu, ElButton, ElUpload, ElCol, ElRow, ElDialog},
       name:'IndexPage',
         data(){
             return {
@@ -100,6 +104,15 @@
         },
       created(){
         this.$http.get('../../static/json/menu.json').then((res)=>{
+          var data = res.body.data;
+          //先将一维数组整理出来
+          var array = [];
+          data.map(function(item,index,arr){
+            if(item.pid==-1){
+              array.push(item)
+            }
+          })
+          console.log(array)
 
 
         })
@@ -179,5 +192,42 @@
     background: rgba(0,0,0,.06);
     background-size: cover;
   }
-
+  /*调整menu的样式*/
+  .el-menu{
+    border:none !important;
+    background-color:rgba(0,0,0,0) !important;
+  }
+  .el-menu-item,
+  .el-menu-item>i,
+  .el-submenu__title,
+  .el-submenu__title>i{
+    color: #fff !important;
+  }
+  .el-menu-item:hover,
+  .el-menu-item:hover>i,
+  .el-submenu__title:hover,
+  .el-submenu__title:hover>i{
+    color: #62c1fd !important;
+    background:rgba(0,0,0,0) !important;
+  }
+  .el-submenu> .el-menu{
+    background: rgba(0,0,0,0.2) !important;
+  }
+  .el-submenu> .el-menu .el-menu-item:hover,
+  .el-submenu> .el-menu .el-menu-item:active,
+  .el-submenu> .el-menu .el-menu-item:visited{
+    background: #50abf1 !important;
+    color:#fff !important;
+  }
+  .active{ /*父级激活*/
+    color: #62c1fd !important;
+    background:rgba(0,0,0,0) !important;
+  }
+  .sub-active{ /*子集激活*/
+    background: #50abf1;
+    color:#fff !important;
+  }
+  .main-content .el-main{
+    padding-left:200px !important;
+  }
 </style>

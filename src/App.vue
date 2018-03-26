@@ -17,6 +17,7 @@ export default {
     width: 100%;
     height: 100%;
     background: url("./assets/img/index-bg.png");
+    background-size: cover;
   }
 #app {
   width: 100%;

@@ -4,16 +4,16 @@
     "message": "success",
     "data":
 		[
-			{"label":"首页","labelEN":"Home","id":"0","pid":"-1","icon":"ion-android-home","url":"../html/index/home.html"},
-			{"label":"日志管理","labelEN":"log","id":"1","pid":"-1","icon":"ion-android-list"},
-				{"label":"告警日志","labelEN":"Request","id":"1-1","pid":"1","url":"../html/logManage/alarmLog.html"},
-				{"label":"操作日志","labelEN":"Service","id":"1-2","pid":"1","url":"../html/logManage/operationLog.html"},
-			
-			{"label":"系统管理","labelEN":"system","id":"2","pid":"-1","icon":"ion-beaker"},
-				{"label":"用户管理","labelEN":"Request","id":"2-1","pid":"2","url":"../html/systemManage/userManage.html"},
-				{"label":"菜单管理","labelEN":"Service","id":"2-2","pid":"2","url":"../html/systemManage/menuManage.html"},
-				{"label":"角色管理","labelEN":"Resource application","id":"2-3","pid":"2","url":"../html/systemManage/roleManage.html"},
-				{"label":"机构管理","labelEN":"Resource application","id":"2-3","pid":"2","url":"../html/systemManage/mechanismManage.html"},
-				{"label":"关于","labelEN":"Resource application","id":"2-3","pid":"2","url":"../html/systemManage/about.html"}
+			{"name":"首页","id":"0","pid":"-1","icon":"ion-android-home","path":"/Home"},
+			{"name":"日志管理","id":"1","pid":"-1","icon":"ion-android-list"},
+				{"name":"告警日志","id":"3","pid":"1","path":"/alarm"},
+				{"name":"操作日志","id":"4","pid":"1","path":"/operate"},
+
+			{"name":"系统管理","id":"2","pid":"-1","icon":"ion-beaker"},
+				{"name":"用户管理","id":"5","pid":"2","path":"/user"},
+				{"name":"菜单管理","id":"6","pid":"2","path":"/menu"},
+				{"name":"角色管理","id":"7","pid":"2","path":"/role"},
+				{"name":"机构管理","id":"8","pid":"2","path":"/organization"},
+				{"name":"关于","id":"9","pid":"2","path":"/about"}
 		]
 }
