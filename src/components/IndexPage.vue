@@ -27,16 +27,18 @@
       </el-header>
         <el-container class="main">
             <el-aside id="aside-menu">
-              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)">
+              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)" @select="selectMenu"
+               text-color="#ffffff" active-text-color="#62c1fd">
                 <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
                   <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf">
                       <template slot="title">
                         <i :class="item.iconCls"></i>
                         <span slot="title">{{item.name}}</span>
                       </template>
-                      <el-menu-item :class="" v-for="(child,index) in  item.children" :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
+                      <el-menu-item :class="" v-for="(child,index) in  item.children"
+                      :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
                   </el-submenu>
-                  <el-menu-item v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
+                  <el-menu-item :class="{active:item.children[0].isActive}" v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
                     <i :class="item.iconCls"></i>
                     {{item.children[0].name}}
                    </el-menu-item>
@@ -120,6 +122,9 @@
       methods:{
         handleSuccess(response, file, fileList){
           this.imgFlag = false
+        },
+        selectMenu(){
+            debugger
         }
       }
     }
@@ -179,6 +184,7 @@
   }
   .main{
     position:relative;
+    top:4px;
   }
   #aside-menu{
     position: absolute;
@@ -219,15 +225,22 @@
     background: #50abf1 !important;
     color:#fff !important;
   }
-  .active{ /*父级激活*/
+  .active,
+  .active i{ /*父级激活*/
     color: #62c1fd !important;
     background:rgba(0,0,0,0) !important;
   }
-  .sub-active{ /*子集激活*/
+  .sub-active,
+  .sub-active i{ /*子集激活*/
     background: #50abf1;
     color:#fff !important;
   }
-  .main-content .el-main{
-    padding-left:200px !important;
+  .main-content{
+    padding: 0 0 0 200px;
+
+  }
+  .main-content main,
+  .main-content footer{
+    background: #F0F2F5;
   }
 </style>

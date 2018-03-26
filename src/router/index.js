@@ -15,6 +15,7 @@ export default new Router({
     {
       path:'/',
       hidden: true,
+
       redirect: { path: '/Home' }
     },
     {
@@ -26,7 +27,7 @@ export default new Router({
       leaf:true,//只有一个子节点
       children:[
         {
-          id:'4',path:'/Home',component:Home,name:'首页'
+          id:'4',path:'/Home',component:Home,name:'首页',isActive:true
         }
       ]
     },
