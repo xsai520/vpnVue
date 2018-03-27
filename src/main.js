@@ -9,8 +9,6 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/fonts/icon/iconfont.css'
 import './styles/base.css'
-const path = require("path");
-console.log(path)
 Vue.use(vueResource)
 Vue.use(ElementUI)
 

@@ -27,10 +27,10 @@
       </el-header>
         <el-container class="main">
             <el-aside id="aside-menu">
-              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)" @select="selectMenu"
+              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)" :default-active="$route.path"
                text-color="#ffffff" active-text-color="#62c1fd">
                 <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
-                  <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf">
+                  <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf" :class="{active:item.isActive}">
                       <template slot="title">
                         <i :class="item.iconCls"></i>
                         <span slot="title">{{item.name}}</span>
@@ -38,7 +38,7 @@
                       <el-menu-item :class="" v-for="(child,index) in  item.children"
                       :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
                   </el-submenu>
-                  <el-menu-item :class="{active:item.children[0].isActive}" v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
+                  <el-menu-item v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
                     <i :class="item.iconCls"></i>
                     {{item.children[0].name}}
                    </el-menu-item>
@@ -97,34 +97,31 @@
         data(){
             return {
               uploadUrl:"https://jsonplaceholder.typicode.com/posts/",
-                user:"admin",
-                authorizationVisible: false,
-                exitVisible:false,
-                imgFlag:true,
-                fileList:[]
+              user:"admin",
+              authorizationVisible: false,
+              exitVisible:false,
+              imgFlag:true,
+              fileList:[]
             }
         },
       created(){
-        this.$http.get('../../static/json/menu.json').then((res)=>{
-          var data = res.body.data;
-          //先将一维数组整理出来
-          var array = [];
-          data.map(function(item,index,arr){
-            if(item.pid==-1){
-              array.push(item)
-            }
-          })
-          console.log(array)
-
-
-        })
+//        this.$http.get('../../static/json/menu.json').then((res)=>{
+//          var data = res.body.data;
+//          //先将一维数组整理出来
+//          var array = [];
+//          data.map(function(item,index,arr){
+//            if(item.pid==-1){
+//              array.push(item)
+//            }
+//          })
+//          console.log(array)
+//
+//
+//        })
       },
       methods:{
         handleSuccess(response, file, fileList){
           this.imgFlag = false
-        },
-        selectMenu(){
-            debugger
         }
       }
     }
@@ -199,48 +196,30 @@
     background-size: cover;
   }
   /*调整menu的样式*/
-  .el-menu{
-    border:none !important;
-    background-color:rgba(0,0,0,0) !important;
+  #aside-menu .el-menu{
+    border-width: 0;
   }
-  .el-menu-item,
-  .el-menu-item>i,
-  .el-submenu__title,
-  .el-submenu__title>i{
-    color: #fff !important;
+  .el-submenu__title i,
+  .el-menu-item i{ /*图标未激活时候是白色*/
+    color:#fff;
   }
-  .el-menu-item:hover,
-  .el-menu-item:hover>i,
-  .el-submenu__title:hover,
-  .el-submenu__title:hover>i{
-    color: #62c1fd !important;
-    background:rgba(0,0,0,0) !important;
+  .el-menu>.el-menu-item:hover,
+  .el-menu>.el-menu-item.is-active,
+  .el-menu>.el-submenu:hover .el-submenu__title,
+  .el-menu>.el-submenu:hover .el-submenu__title i{
+    background: rgba(0,0,0,0) !important;
+    color:#62c1fd !important;
   }
-  .el-submenu> .el-menu{
+  .el-submenu .el-menu{ /*二级菜单的背景*/
     background: rgba(0,0,0,0.2) !important;
   }
-  .el-submenu> .el-menu .el-menu-item:hover,
-  .el-submenu> .el-menu .el-menu-item:active,
-  .el-submenu> .el-menu .el-menu-item:visited{
+  .el-submenu .el-menu .el-menu-item:hover,
+  .el-submenu .el-menu .el-menu-item.is-active{
     background: #50abf1 !important;
-    color:#fff !important;
+    color: #fff !important;
   }
-  .active,
-  .active i{ /*父级激活*/
-    color: #62c1fd !important;
-    background:rgba(0,0,0,0) !important;
-  }
-  .sub-active,
-  .sub-active i{ /*子集激活*/
-    background: #50abf1;
-    color:#fff !important;
-  }
-  .main-content{
-    padding: 0 0 0 200px;
-
-  }
-  .main-content main,
-  .main-content footer{
-    background: #F0F2F5;
+  .el-menu> .el-submenu.active i,
+  .el-menu> .el-submenu.active span{
+    color:#62c1fd !important;
   }
 </style>

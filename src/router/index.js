@@ -15,19 +15,19 @@ export default new Router({
     {
       path:'/',
       hidden: true,
-
       redirect: { path: '/Home' }
     },
     {
       id:'1',
       path: '/',
       component: IndexPage,
+      isActive:false,
       name: '', //只有一个子节点的时候不添加name
       iconCls:'el-icon-location',
       leaf:true,//只有一个子节点
       children:[
         {
-          id:'4',path:'/Home',component:Home,name:'首页',isActive:true
+          id:'4',path:'/Home',component:Home,name:'首页',
         }
       ]
     },
@@ -36,6 +36,7 @@ export default new Router({
       path:'/',
       component:IndexPage,
       name:'日志管理',
+      isActive:false,
       iconCls:'el-icon-share',
       children:[
         {
@@ -50,6 +51,7 @@ export default new Router({
       id:'3',
       path:'/',
       component:IndexPage,
+      isActive:false,
       name:'系统管理',
       iconCls:'el-icon-setting',
       children:[
