@@ -222,4 +222,14 @@
   .el-menu> .el-submenu.active span{
     color:#62c1fd !important;
   }
+  .main-content{
+    margin-left:200px;
+    background: #F0F2F5;
+  }
+  .main-content .el-main{
+    position: relative;
+    padding:0;
+    margin:0 20px 0 16px;
+    background: #fff;
+  }
 </style>

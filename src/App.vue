@@ -27,4 +27,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+  /*@font-face{*/
+    /*font-family: BDZYJT;*/
+    /*src: url("./assets/fonts/BDZYJT.TTF");*/
+  /*}*/
+  /*@font-face{*/
+    /*font-family: FZCXJT;*/
+    /*src: url("./assets/fonts/FZCXJT.TTF");*/
+  /*}*/
+  /*@font-face{*/
+    /*font-family: FZLTHJW;*/
+    /*src: url("./assets/fonts/FZLTHJW.TTF");*/
+  /*}*/
 </style>

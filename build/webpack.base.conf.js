@@ -65,6 +65,14 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
+      // {
+      //   test: /\.css$/,
+      //   loader: 'postcss-loader!style-loaer!css-loader',
+      //   options: {
+      //     limit: 10000,
+      //     name: utils.assetsPath('media/[name].[hash:7].[ext]')
+      //   }
+      // }
     ]
   },
   node: {
