@@ -230,6 +230,11 @@
     position: relative;
     padding:0;
     margin:0 20px 0 16px;
+  }
+  /*表格查询条件设置的表单样式*/
+  .tableForm .el-form{
+    margin: 13px 0 15px 15px;
+    padding: 25px 25px 10px 0px;
     background: #fff;
   }
 </style>
