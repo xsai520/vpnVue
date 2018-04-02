@@ -47,7 +47,9 @@
             </el-aside>
             <el-container class="main-content">
                 <el-main> <router-view/></el-main>
-                <el-footer></el-footer>
+                <el-footer>
+                  @版权所有 上海辰锐信息科技公司
+                </el-footer>
             </el-container>
         </el-container>
       <el-dialog title="关于授权" :visible.sync="authorizationVisible" width="30%">
@@ -232,9 +234,19 @@
     margin:0 20px 0 16px;
   }
   /*表格查询条件设置的表单样式*/
+  .tableForm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
   .tableForm .el-form{
-    margin: 13px 0 15px 15px;
+    margin: 13px 0 15px;
     padding: 25px 25px 10px 0px;
     background: #fff;
+  }
+  .el-footer{
+    line-height:60px;
+    text-align: center;
   }
 </style>

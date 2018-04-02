@@ -13,7 +13,7 @@
             <el-date-picker type="date" v-model="formData.start"></el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col class="line" :span="2">-</el-col>
+        <el-col class="line" :span="2"> --</el-col>
         <el-col :span="11">
           <el-form-item>
             <el-date-picker type="date"  v-model="formData.end"></el-date-picker>
@@ -25,6 +25,18 @@
         <el-button @click="reset(formData)">重置</el-button>
       </el-form-item>
     </el-form>
+    <div class="tableBox">
+      <el-button type="primary">日志导出</el-button>
+      <template>
+        <el-table>
+          <el-table-column label="操作人"></el-table-column>
+          <el-table-column label="发生时间"></el-table-column>
+          <el-table-column label="模块名称"></el-table-column>
+          <el-table-column label="告警内容"></el-table-column>
+        </el-table>
+      </template>
+
+    </div>
   </div>
 </template>
 <script>
@@ -32,8 +44,9 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
+  import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
   export default{
-    components: {ElButton, ElFormItem, ElInput, ElForm},
+    components: {ElTable, ElButton, ElFormItem, ElInput, ElForm},
     name:"Alarm",
     data(){
         return {
@@ -65,5 +78,10 @@
   }
   .el-form-item  .line{
     text-align: center;
+  }
+  .tableBox{
+    height:calc(100% - 97px);
+    padding:15px;
+    background: #fff;
   }
 </style>

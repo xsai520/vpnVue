@@ -92,6 +92,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    background: #fff;
   }
   .title{
     width:100%;
@@ -130,6 +131,6 @@
   .gauge{
     width: 100%;
     height: 100%;
-
   }
+  
 </style>
