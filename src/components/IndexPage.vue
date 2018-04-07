@@ -246,7 +246,10 @@
     background: #fff;
   }
   .el-footer{
-    line-height:60px;
+    height:30px !important;
+    line-height:30px;
     text-align: center;
+    font-size: 12px;
+    color: #666;
   }
 </style>

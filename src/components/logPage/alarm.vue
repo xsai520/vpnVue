@@ -25,28 +25,23 @@
         <el-button @click="reset(formData)">重置</el-button>
       </el-form-item>
     </el-form>
-    <div class="tableBox">
+    <div class="tableBox">-
       <el-button type="primary">日志导出</el-button>
-      <template>
-        <el-table>
-          <el-table-column label="操作人"></el-table-column>
-          <el-table-column label="发生时间"></el-table-column>
-          <el-table-column label="模块名称"></el-table-column>
-          <el-table-column label="告警内容"></el-table-column>
-        </el-table>
-      </template>
-
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column prop="date" label="日期"></el-table-column>
+        <el-table-column prop="name" label="姓名"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+      </el-table>
     </div>
   </div>
 </template>
 <script>
   import ElForm from "../../../node_modules/element-ui/packages/form/src/form";
-  import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
   export default{
-    components: {ElTable, ElButton, ElFormItem, ElInput, ElForm},
+    components: { ElTable, ElButton, ElFormItem, ElForm},
     name:"Alarm",
     data(){
         return {
@@ -55,7 +50,14 @@
               mouduleName:"",
               start:'',
               end:''
+            },
+          tableData:[
+            {
+              date: '2016-05-02',
+              name: '王小虎',
+              address: '上海市普陀区金沙江路 1518 弄'
             }
+          ]
         }
     },
     methods:{
@@ -63,7 +65,7 @@
 
       },
       reset(formData){
-        this.$refs[formData].resetFields();
+
       }
     }
   }
