@@ -252,4 +252,9 @@
     font-size: 12px;
     color: #666;
   }
+  .tableBox{
+    height:calc(100% - 97px);
+    padding:15px;
+    background: #fff;
+  }
 </style>

@@ -64,7 +64,6 @@
     },
     created(){
         this.$http.get("../../static/json/alarm.json").then((res)=>{
-
             this.tableData = res.body;
         })
     },
@@ -88,11 +87,6 @@
   }
   .el-form-item  .line{
     text-align: center;
-  }
-  .tableBox{
-    height:calc(100% - 97px);
-    padding:15px;
-    background: #fff;
   }
   .tableBox .el-table{
     top:5px;
