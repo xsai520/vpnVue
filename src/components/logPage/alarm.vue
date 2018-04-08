@@ -25,23 +25,31 @@
         <el-button @click="reset(formData)">重置</el-button>
       </el-form-item>
     </el-form>
-    <div class="tableBox">-
+    <div class="tableBox">
       <el-button type="primary">日志导出</el-button>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="日期"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
+      <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="username" label="操作人"></el-table-column>
+        <el-table-column prop="createTime" label="发生时间"></el-table-column>
+        <el-table-column prop="module" label="模块名称"></el-table-column>
+        <el-table-column prop="alarmContent" label="告警内容"></el-table-column>
       </el-table>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
     </div>
   </div>
 </template>
 <script>
   import ElForm from "../../../node_modules/element-ui/packages/form/src/form";
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
+  import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
+
   export default{
-    components: { ElTable, ElButton, ElFormItem, ElForm},
+    components: { ElTable, ElButton,ElInput,ElFormItem, ElForm},
     name:"Alarm",
     data(){
         return {
@@ -51,14 +59,14 @@
               start:'',
               end:''
             },
-          tableData:[
-            {
-              date: '2016-05-02',
-              name: '王小虎',
-              address: '上海市普陀区金沙江路 1518 弄'
-            }
-          ]
+          tableData:[]
         }
+    },
+    created(){
+        this.$http.get("../../static/json/alarm.json").then((res)=>{
+
+            this.tableData = res.body;
+        })
     },
     methods:{
       handleSelect(){
@@ -85,5 +93,12 @@
     height:calc(100% - 97px);
     padding:15px;
     background: #fff;
+  }
+  .tableBox .el-table{
+    top:5px;
+  }
+  .el-pagination {
+    margin-top: 10px;
+    float: right;
   }
 </style>
