@@ -26,25 +26,27 @@
         </el-row>
       </el-header>
         <el-container class="main">
-            <el-aside id="aside-menu">
-              <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)" :default-active="$route.path"
-               text-color="#ffffff" active-text-color="#62c1fd">
-                <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
-                  <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf" :class="{active:item.isActive}">
+              <el-aside id="aside-menu">
+                <el-scrollbar class="page-component_scroll">
+                <el-menu :unique-opened=true :router="true" backgroundColor="rgba(0,0,0,0)" :default-active="$route.path"
+                         text-color="#ffffff" active-text-color="#62c1fd">
+                  <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden" >
+                    <el-submenu :index="index+''" :key="item.id"  v-if="!item.leaf" :class="{active:item.isActive}">
                       <template slot="title">
                         <i :class="item.iconCls"></i>
                         <span slot="title">{{item.name}}</span>
                       </template>
                       <el-menu-item :class="" v-for="(child,index) in  item.children"
-                      :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
-                  </el-submenu>
-                  <el-menu-item v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
-                    <i :class="item.iconCls"></i>
-                    {{item.children[0].name}}
+                                    :index="child.path" :key="child.path">{{child.name}}</el-menu-item>
+                    </el-submenu>
+                    <el-menu-item v-if="item.leaf && item.children.length>0"  :index="item.children[0].path" :key="item.children[0].path">
+                      <i :class="item.iconCls"></i>
+                      {{item.children[0].name}}
                    </el-menu-item>
-                </template>
-              </el-menu>
-            </el-aside>
+                  </template>
+                </el-menu>
+                </el-scrollbar>
+              </el-aside>
             <el-container class="main-content">
                 <el-main> <router-view/></el-main>
                 <el-footer>
@@ -93,8 +95,9 @@
   import ElUpload from "../../node_modules/element-ui/packages/upload/src/index";
   import ElButton from "../../node_modules/element-ui/packages/button/src/button";
   import ElSubmenu from "../../node_modules/element-ui/packages/menu/src/submenu";
+  import ElScrollbar from "element-ui/packages/scrollbar/src/main";
     export default{
-      components: {ElSubmenu, ElButton, ElUpload, ElCol, ElRow, ElDialog},
+      components: {ElScrollbar, ElSubmenu, ElButton, ElUpload, ElCol, ElRow, ElDialog},
       name:'IndexPage',
         data(){
             return {
@@ -186,14 +189,9 @@
     top:4px;
   }
   #aside-menu{
-    position: absolute;
-    left:0;
-    top: 0;
-    bottom: 0;
-    width:200px;
-  }
-  #aside-menu{
     width:200px !important;
+    /*height:100%;*/
+    overflow: hidden;
     background: rgba(0,0,0,.06);
     background-size: cover;
   }
@@ -225,7 +223,6 @@
     color:#62c1fd !important;
   }
   .main-content{
-    margin-left:200px;
     background: #F0F2F5;
   }
   .main-content .el-main{
@@ -256,5 +253,12 @@
     height:calc(100% - 97px);
     padding:15px;
     background: #fff;
+  }
+  /*设置滚动条*/
+  .page-component_scroll{
+    height: 100%;
+  }
+  .page-component_scroll .el-scrollbar_wrap{
+    overflow: auto;
   }
 </style>
