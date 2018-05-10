@@ -1,6 +1,6 @@
 <template>
   <div class="tableForm" id="alarm">
-    <el-form :inline="true" class="demo-form-inline">
+    <el-form :inline="true" class="demo-form-inline" id="alarmForm" ref="validateForm">
       <el-form-item label="操作人：">
         <el-input v-model="formData.operator"></el-input>
       </el-form-item>
@@ -22,11 +22,11 @@
       </el-form-item>
       <el-form-item>
         <el-button  type="primary" @click="handleSelect">查询</el-button>
-        <el-button @click="reset(formData)">重置</el-button>
+        <el-button @click="reset('validateForm')">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="tableBox">
-      <el-button type="primary">日志导出</el-button>
+      <el-button type="primary" @click="exportLog()">日志导出</el-button>
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column prop="username" label="操作人"></el-table-column>
         <el-table-column prop="createTime" label="发生时间"></el-table-column>
@@ -47,6 +47,7 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
+  //import common form
 
   export default{
     components: { ElTable, ElButton,ElInput,ElFormItem, ElForm},
@@ -63,7 +64,8 @@
         }
     },
     created(){
-        this.$http.get("../../static/json/alarm.json").then((res)=>{
+        var options={};
+        this.$http.get("../../static/json/alarm.json",options).then((res)=>{
             this.tableData = res.body;
         })
     },
@@ -71,8 +73,12 @@
       handleSelect(){
 
       },
-      reset(formData){
-
+      reset(validateForm){
+         //this.$refs 获取dom节点
+          this.$refs[validateForm].resetFields();
+      },
+      exportLog(){
+          window.location.href="";
       }
     }
   }
