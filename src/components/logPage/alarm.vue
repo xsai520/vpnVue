@@ -47,7 +47,7 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
-  //import common form
+  import base from  "@/assets/js/base.js"
 
   export default{
     components: { ElTable, ElButton,ElInput,ElFormItem, ElForm},
@@ -64,7 +64,7 @@
         }
     },
     created(){
-        var options={};
+        var options=base.getParams();
         this.$http.get("../../static/json/alarm.json",options).then((res)=>{
             this.tableData = res.body;
         })
