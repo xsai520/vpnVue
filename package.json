@@ -12,6 +12,7 @@
   "dependencies": {
     "echarts": "^4.0.4",
     "element-ui": "^2.3.3",
+    "jquery": "^3.3.1",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.0",
     "vue-router": "^3.0.1"
@@ -50,6 +51,7 @@
     "style-loader": "^0.20.3",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-devtools": "^3.1.9",
     "vue-loader": "^13.7.1",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",

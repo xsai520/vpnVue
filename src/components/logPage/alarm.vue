@@ -2,21 +2,21 @@
   <div class="tableForm" id="alarm">
     <el-form :inline="true" class="demo-form-inline" id="alarmForm" ref="validateForm">
       <el-form-item label="操作人：">
-        <el-input v-model="formData.operator"></el-input>
+        <el-input v-model="formData.operator" name="operation"></el-input>
       </el-form-item>
       <el-form-item label="模块名称：">
-        <el-input v-model="formData.mouduleName"></el-input>
+        <el-input v-model="formData.moduleName" name="module"></el-input>
       </el-form-item>
       <el-form-item label="发生时间：">
         <el-col :span="11">
           <el-form-item>
-            <el-date-picker type="date" v-model="formData.start"></el-date-picker>
+            <el-date-picker type="date" v-model="formData.start" name="startTime"></el-date-picker>
           </el-form-item>
         </el-col>
         <el-col class="line" :span="2"> --</el-col>
         <el-col :span="11">
           <el-form-item>
-            <el-date-picker type="date"  v-model="formData.end"></el-date-picker>
+            <el-date-picker type="date"  v-model="formData.end" name="endTime"></el-date-picker>
           </el-form-item>
         </el-col>
       </el-form-item>
@@ -47,7 +47,7 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
-  import base from  "@/assets/js/base.js"
+  import Base from  "@/assets/js/base.js"
 
   export default{
     components: { ElTable, ElButton,ElInput,ElFormItem, ElForm},
@@ -56,7 +56,7 @@
         return {
             formData:{
               operator:"",
-              mouduleName:"",
+              moduleName:"",
               start:'',
               end:''
             },
@@ -64,14 +64,16 @@
         }
     },
     created(){
-        var options=base.getParams();
-        this.$http.get("../../static/json/alarm.json",options).then((res)=>{
-            this.tableData = res.body;
-        })
+      this.renderTable()
     },
     methods:{
+      renderTable(){
+        this.$http.get("../../static/json/alarm.json",this.formData).then((res)=>{
+          this.tableData = res.body;
+        })
+      },
       handleSelect(){
-
+        this.formData=Base.getParams($("#alarmForm"));
       },
       reset(validateForm){
          //this.$refs 获取dom节点
