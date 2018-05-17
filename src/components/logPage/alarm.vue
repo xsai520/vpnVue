@@ -73,7 +73,9 @@
         })
       },
       handleSelect(){
+        debugger
         this.formData=Base.getParams($("#alarmForm"));
+        this.renderTable();
       },
       reset(validateForm){
          //this.$refs 获取dom节点
