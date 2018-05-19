@@ -76,4 +76,22 @@ Base.getParams = function(form,isStr){//isStr 表示是否拼接成字符串
   }
   return params;
 };
+//一般的做法是将一级数组取出，然后循环数组，找出其中pid是一级数组id的
+Base.tree = function (data,pid) {
+  let self={};
+  self.data = data ? data : null;
+  self.array = [];
+  self.pid = pid ? pid:null;
+  if(self.data && self.pid){
+    self.transform = function (pid) {
+       data.map(function(val,index,arr){
+         if(pid==val.id){
+           self.array.push(val);
+           self.transform(val.id)
+         }
+       })
+    }
+    self.transform(pid)
+  }
+};
 export default Base;

@@ -44,6 +44,7 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
+  import Base from  "@/assets/js/base.js"
   export default{
     components: {ElButton, ElTable, ElInput, ElFormItem, ElForm},
     name:"Menu",
@@ -97,6 +98,21 @@
                 address:"江苏南京"
             }
           ]
+        }
+      },
+      mounted:function () {
+        this.renderTree();
+        this.renderTable();
+      },
+      methods:{
+        renderTree(){
+            this.$http.get("../../static/json/menu.json").then((res)=>{
+              let data = res.body.data;
+              Base.tree(data,0);
+            })
+        },
+        renderTable(){
+
         }
       }
   }

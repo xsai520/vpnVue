@@ -1,19 +1,39 @@
 {
-    "success": true,
-    "code": "0",
-    "message": "success",
-    "data":
-		[
-			{"name":"首页","id":"0","pid":"-1","icon":"ion-android-home","path":"/Home"},
-			{"name":"日志管理","id":"1","pid":"-1","icon":"ion-android-list"},
-				{"name":"告警日志","id":"3","pid":"1","path":"/alarm"},
-				{"name":"操作日志","id":"4","pid":"1","path":"/operate"},
-
-			{"name":"系统管理","id":"2","pid":"-1","icon":"ion-beaker"},
-				{"name":"用户管理","id":"5","pid":"2","path":"/user"},
-				{"name":"菜单管理","id":"6","pid":"2","path":"/menu"},
-				{"name":"角色管理","id":"7","pid":"2","path":"/role"},
-				{"name":"机构管理","id":"8","pid":"2","path":"/organization"},
-				{"name":"关于","id":"9","pid":"2","path":"/about"}
-		]
+  "data":[
+    {"id": "1",  "label": "首页", "icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "11", "label": "服务审计","icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "12", "label": "网络配置","icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "13", "label": "外部监管配置","icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "2",  "label": "日志管理", "icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "14", "label": "还原与备份","icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "5",  "label": "系统管理", "icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "15", "label": "采集管理", "icon": null, "pid": "0", "url": null, "sort": null},
+    {"id": "6",  "label": "用户管理", "icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "3",  "label": "告警日志", "icon": null, "pid": "2", "url": null, "sort": null},
+    {"id": "80", "label": "IP配置", "icon": null, "pid": "12", "url": null,  "sort": null},
+    {"id": "70", "label": "交换平台服务日志", "icon": null, "pid": "11", "url": null, "sort": null},
+    {"id": "110","label": "服务配置", "icon": null, "pid": "15", "url": null, "sort": null},
+    {"id": "100","label": "恢复出厂", "icon": null, "pid": "14", "url": null, "sort": null},
+    {"id": "90", "label": "snmp配置",  "icon": null, "pid": "13", "url": null, "sort": null},
+    {"id": "81", "label": "路由配置", "icon": null, "pid": "12", "url": null, "sort": null},
+    {"id": "7",  "label": "机构管理",  "icon": null, "pid": "5", "url": null,  "sort": null},
+    {"id": "71", "label": "用户操作日志", "icon": null, "pid": "11", "url": null, "sort": null},
+    {"id": "91", "label": "syslog配置", "icon": null, "pid": "13", "url": null, "sort": null},
+    {"id": "4",  "label": "操作日志", "icon": null, "pid": "2",  "url": null,  "sort": null},
+    {"id": "101","label": "系统升级",  "icon": null, "pid": "14", "url": null, "sort": null},
+    {"id": "111","label": "服务管理",  "icon": null, "pid": "15", "url": null, "sort": null},
+    {"id": "102","label": "设置还原点", "icon": null, "pid": "14", "url": null, "sort": null},
+    {"id": "112","label": "测试工具",  "icon": null, "pid": "15", "url": null, "sort": null},
+    {"id": "8",  "label": "角色管理", "icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "72", "label": "设备运行日志", "icon": null, "pid": "11", "url": null, "sort": null},
+    {"id": "92", "label": "交换数据总量查询", "icon": null, "pid": "11", "url": null, "sort": null},
+    {"id": "6f6cae28-f197-4681-a5ca-ce365a04d4f3", "label": "交换数据总量查询","icon": null, "pid": "11"},
+    {"id": "9",  "label": "菜单管理", "icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "93", "label": "历史交换总量查询", "icon": null, "pid": "11", "url": null, "sort": null},
+    {"id": "55", "label": "时间设置","icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "fcc46f3b-cdcc-480c-b5d8-6b41fc93c62b", "label": "历史交换总量查询", "icon": null, "pid": "11"},
+    {"id": "56", "label": "远程访问控制","icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "57", "label": "参数设置",  "icon": null, "pid": "5", "url": null, "sort": null},
+    {"id": "10", "label": "关于", "icon": null, "pid": "5", "url": null, "sort": null}
+  ]
 }
