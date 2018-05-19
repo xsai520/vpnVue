@@ -239,7 +239,7 @@
   }
   .tableForm .el-form{
     margin: 13px 0 15px;
-    padding: 25px 25px 10px 0px;
+    padding: 25px 25px 10px 10px;
     background: #fff;
   }
   .el-footer{
@@ -259,6 +259,7 @@
     height: 100%;
   }
   .page-component_scroll .el-scrollbar_wrap{
-    overflow: auto;
+    overflow-x: hidden;
+    /*overflow-y: auto;*/
   }
 </style>

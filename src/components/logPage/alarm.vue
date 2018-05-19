@@ -33,10 +33,10 @@
         <el-table-column prop="module" label="模块名称"></el-table-column>
         <el-table-column prop="alarmContent" label="告警内容"></el-table-column>
       </el-table>
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="100">
+      <el-pagination @current-change="handleCurrentChange"
+                     background
+                     layout="prev, pager, next"
+                     :total= total>
       </el-pagination>
     </div>
   </div>
@@ -60,29 +60,43 @@
               start:'',
               end:''
             },
-          tableData:[]
+          tableData:[],
+          total:0
         }
     },
     created(){
       this.renderTable()
     },
     methods:{
-      renderTable(){
-        this.$http.get("../../static/json/alarm.json",this.formData).then((res)=>{
+      renderTable(page){
+        let params = {
+          pageSize:page?page:0,
+          pageNumber:10,
+          param :this.formData
+        };
+        this.$http.get("../../static/json/alarm.json",params).then((res)=>{
           this.tableData = res.body;
+          this.total = this.tableData.length;
         })
       },
       handleSelect(){
-        debugger
         this.formData=Base.getParams($("#alarmForm"));
         this.renderTable();
       },
       reset(validateForm){
          //this.$refs 获取dom节点
-          this.$refs[validateForm].resetFields();
+         this.$refs[validateForm].resetFields();
       },
       exportLog(){
-          window.location.href="";
+        let param = Base.getParams($("#alarmForm"));
+        let operation = param.operation?param.operation:"";
+        let module = param.module?param.module:"";
+        let startTime = param.startTime?param.startTime:"";
+        let endTime = param.endTime?param.endTime:"";
+        window.location.href ="../../alarmController/exportAlarm?userName="+operation+"&module="+module+"&createTimeStart="+startTime+"&createTimeEnd="+endTime;
+      },
+      handleCurrentChange(currentPage){
+        this.renderTable(currentPage-1)
       }
     }
   }

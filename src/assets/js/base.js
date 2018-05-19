@@ -2,8 +2,7 @@
  * Created by Administrator on 2018/5/10 0010.
  */
 let Base={};
-Base.getParams = function(form,isStr){//isStr 表示拼接成字符串
-  debugger
+Base.getParams = function(form,isStr){//isStr 表示是否拼接成字符串
   let params = null;//需要返回出去的参数
   let self={};
   isStr?params="":params={};

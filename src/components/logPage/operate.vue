@@ -1,6 +1,6 @@
 <template>
   <div class="tableForm" id="operate">
-    <el-form :inline="true" class="demo-form-inline">
+    <el-form :inline="true" class="demo-form-inline" id="operateForm" ref="validateForm ">
       <el-form-item label="登录用户：">
         <el-input v-model="formData.username"></el-input>
       </el-form-item>
@@ -21,8 +21,8 @@
         <el-date-picker type="date"  v-model="formData.endTime"></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button  type="primary">查询</el-button>
-        <el-button>重置</el-button>
+        <el-button  type="primary" @click="handleSelect">查询</el-button>
+        <el-button @click="reset('validateForm')">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="tableBox">
@@ -34,10 +34,10 @@
         <el-table-column prop="accessTime" label="访问时间"></el-table-column>
         <el-table-column prop="accessResult" label="操作结果"></el-table-column>
       </el-table>
-      <el-pagination
+      <el-pagination @current-change="handleCurrentChange"
         background
         layout="prev, pager, next"
-        :total="100">
+        :total=total>
       </el-pagination>
     </div>
   </div>
@@ -59,13 +59,45 @@
               startTime:"",
               endTime:""
             },
-            tableData:[]
+            tableData:[],
+            total:0
         }
     },
     created(){
-        this.$http.get("../../static/json/operate.json").then((res)=>{
-          this.tableData = res.body;
-        })
+      this.renderTable()
+    },
+    methods:{
+      renderTable(page){
+        let params = {
+            pageSize:page?page:0,
+            pageNumber:10,
+            param :this.formData
+          };
+          this.$http.get("../../static/json/operate.json",params).then((res)=>{
+            this.tableData = res.body;
+            this.total = this.tableData.length;
+          })
+        },
+      handleSelect(){
+        this.formData=Base.getParams($("#alarmForm"));
+        this.renderTable();
+        },
+      reset(validateForm){
+        //this.$refs 获取dom节点
+        this.$refs[validateForm].resetFields();
+      },
+      exportLog(){
+        let param = Base.getParams($("#alarmForm"));
+        let username = param.username?param.username:"";
+        let ip = param.ip?param.ip:"";
+        let result = param.result?param.result:"";
+        let startTime = param.startTime?param.startTime:"";
+        let endTime = param.endTime?param.endTime:"";
+        window.location.href = $.base+"/operationLog/exportLog?userName="+username+"&ip="+ip+"&accessResult="+result+"&createTimeStart="+startTime+"&createTimeEnd="+endTime;
+      },
+      handleCurrentChange(currentPage){
+        this.renderTable(currentPage-1)
+      }
     }
   }
 </script>

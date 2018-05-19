@@ -22,7 +22,7 @@
       <el-button type="primary">修改</el-button>
       <el-button type="primary">查看</el-button>
       <el-table :data="tableData" border >
-        <el-table-column  type="selection"></el-table-column>
+        <el-table-column type="selection"></el-table-column>
         <el-table-column prop="menuName" label="菜单名称"></el-table-column>
         <el-table-column prop="parentMenuName" label="上级菜单"></el-table-column>
         <el-table-column prop="sort" label="排序"></el-table-column>
