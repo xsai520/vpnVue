@@ -1,0 +1,19 @@
+{
+  "data":[
+    {
+    "id":1,
+    "menuName":"a1",
+    "parentMenuName":"dddd",
+    "sort":1,
+    "address":"江苏南京"
+    },
+    {
+      "id":2,
+      "menuName":"a2",
+      "parentMenuName":"dddd",
+      "sort":1,
+      "address":"江苏南京"
+    }
+  ],
+  "total":10
+}
