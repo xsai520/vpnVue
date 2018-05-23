@@ -255,10 +255,10 @@
     background: #fff;
   }
   /*设置滚动条*/
-  .page-component_scroll{
+  #aside-menu .page-component_scroll{
     height: 100%;
   }
-  .el-scrollbar__wrap{
+  #aside-menu .el-scrollbar__wrap{
     overflow-y: scroll !important;
     overflow-x:hidden !important;
   }
