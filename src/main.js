@@ -5,15 +5,34 @@ import Vue from 'vue'
 import router from './router'
 import vueResource from 'vue-resource'
 import ElementUI from 'element-ui'
+import VeeValidate from 'vee-validate'
+import zh_CN from 'vee-validate/dist/locale/zh_CN';//引入中文文件
+import VueI18n from 'vue-i18n';
 import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import '@/assets/fonts/icon/iconfont.css'
 import './styles/base.css'
 import $ from "jquery"
-Vue.use(vueResource)
-Vue.use(ElementUI)
-
-Vue.config.productionTip = false
+Vue.use(vueResource);
+Vue.use(ElementUI);
+Vue.use(VueI18n);
+const i18n = new VueI18n({
+  locale:'zh_CN'
+});
+Vue.use(VeeValidate,{
+  errorBagName: 'errors', // change if property conflicts
+  events: 'input|blur',
+  i18n,
+  i18nRootKey:'validation',
+  dictionary:{
+    zh_CN
+  },
+  strict: true,
+  enableAutoClasses: true,
+  events: 'blur',
+  inject: true
+});
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({

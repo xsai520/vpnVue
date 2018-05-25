@@ -45,7 +45,10 @@
     <el-dialog title="新增菜单信息" :visible.sync="addStatus" width="30%">
       <el-form class="demo-form-inline" ref="addForm">
         <el-form-item label="菜单名称：" >
-          <el-input v-model="operateData.menuName" name="menuName"></el-input>
+          <el-input v-model="operateData.menuName" v-validate="'required|menuName'"
+                    :class="{'input':true,'is-danger':errors.has('menuName')}"
+           name="menuName"></el-input>
+          <i v-show="errors.has('menuName')" class="fa fa-warning"></i>
         </el-form-item>
         <el-form-item label="菜单级别：">
           <el-select v-model="operateData.menuLevel"  name="menuLevel" placeholder="请选择菜单级别">
@@ -152,7 +155,9 @@
         this.renderTable()
       },
       add(){
+       //调用保存接口
 
+        this.addStatus=false;
       },
       edit(){
 
