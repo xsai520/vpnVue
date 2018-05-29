@@ -19,19 +19,6 @@ Vue.use(VueI18n);
 const i18n = new VueI18n({
   locale:'zh_CN'
 });
-Vue.use(VeeValidate,{
-  errorBagName: 'errors', // change if property conflicts
-  events: 'input|blur',
-  i18n,
-  i18nRootKey:'validation',
-  dictionary:{
-    zh_CN
-  },
-  strict: true,
-  enableAutoClasses: true,
-  events: 'blur',
-  inject: true
-});
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

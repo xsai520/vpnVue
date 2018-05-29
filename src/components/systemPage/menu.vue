@@ -23,9 +23,9 @@
         </el-form-item>
       </el-form>
       <div class="tableBox">
-        <el-button type="primary" @click="addStatus=true">新增</el-button>
+        <el-button type="primary" @click="openDialog(1)">新增</el-button>
         <el-button type="primary" :disabled="delDisabled">删除</el-button>
-        <el-button type="primary" :disabled="editDisabled">修改</el-button>
+        <el-button type="primary" :disabled="editDisabled" @click="openDialog(2)">修改</el-button>
         <el-button type="primary" :disabled="viewDisabled">查看</el-button>
         <el-table :data="tableData" border  @selection-change="handleSelectionChange">
           <el-table-column type="selection"></el-table-column>
@@ -42,31 +42,28 @@
 
       </div>
     </div>
-    <el-dialog title="新增菜单信息" :visible.sync="addStatus" width="30%">
-      <el-form class="demo-form-inline" ref="addForm">
-        <el-form-item label="菜单名称：" >
-          <el-input v-model="operateData.menuName" v-validate="'required|menuName'"
-                    :class="{'input':true,'is-danger':errors.has('menuName')}"
-           name="menuName"></el-input>
-          <i v-show="errors.has('menuName')" class="fa fa-warning"></i>
+    <el-dialog :title="menuTitle" :visible.sync="addStatus" width="30%">
+      <el-form class="demo-form-inline addForm" :model="operateData" :rules="rules" ref="addForm">
+        <el-form-item label="菜单名称：" prop="menuName">
+          <el-input v-model="operateData.menuName" name="menuName"></el-input>
         </el-form-item>
-        <el-form-item label="菜单级别：">
+        <el-form-item label="菜单级别：" prop="menuLevel">
           <el-select v-model="operateData.menuLevel"  name="menuLevel" placeholder="请选择菜单级别">
             <el-option label="一级菜单" value="0"></el-option>
             <el-option label="二级菜单" value="1"></el-option>
             <el-option label="按钮菜单" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="排序：">
+        <el-form-item label="排序：" prop="sort">
           <el-input v-model="operateData.sort" name="sort"></el-input>
         </el-form-item>
-        <el-form-item label="URL：">
+        <el-form-item label="URL：" prop="url">
           <el-input v-model="operateData.url" name="url"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="add" type="primary">确定</el-button>
-        <el-button @click="addStatus=false">取消</el-button>
+        <el-button @click="add('addForm')" type="primary">确定</el-button>
+        <el-button @click="reset('addForm')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -82,6 +79,24 @@
     components: {ElButton, ElTable, ElInput, ElFormItem, ElForm},
     name:"Menu",
     data(){
+      let validateSort = (rule,value,callback) =>{
+         //Number.isInteger(value)验证是否输入的是整数
+         let reg=/^(?!0)(?:[0-9]{1,3}|1000)$/;
+
+         if(!reg.test(value)){
+             return callback(new Error("请输入1-1000的正整数"));
+         }else{
+             return callback();
+         }
+      };
+      let validateUrl = (rule,value,callback) =>{
+        let reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+        if(!reg.test(value)){
+            return callback(new Error("请输入正确的url地址"));
+        }else{
+            return callback();
+        }
+      };
       return {
         treeData: [],
         formData:{
@@ -94,6 +109,25 @@
           sort:"",
           url:""
         },
+        rules:{
+          menuName:[
+            {required:true,message:"请输入菜单名称",trigger:'blur'},
+            {min:1,max:20,message:'输入长度不能超过20',trigger:'blur'}
+          ],
+          menuLevel:[
+            {required:true,message:"请选择菜单级别",trigger:'change'}
+          ],
+          sort:[
+            {
+                validator:validateSort,trigger:'blur'
+            }//只能输入1000以内的正整数
+          ],
+          url:[
+            {required:true,message:"请输入url地址",trigger:'blur'},
+            {min:1,max:40,message:"请输入长度不超过40的url地址",trigger:'blur'},
+            {validator:validateUrl,trigger:'blur'}
+          ]
+        },
         tableData:[],
         total:0,
         delDisabled:true,
@@ -102,7 +136,9 @@
         addStatus:false,
         editStatus:false,
         viewStatus:false,
-        cancelStatus:false
+        cancelStatus:false,
+        selectData:[],
+        menuTitle:""
       }
     },
     mounted:function () {
@@ -136,6 +172,7 @@
       },
       handleSelectionChange(arr){
         //根据数组长度来判断选择
+        this.selectData=[];
         if(arr.length==0){
           this.delDisabled =  true;
           this.editDisabled = true;
@@ -144,6 +181,7 @@
           this.delDisabled = false;
           this.editDisabled = false;
           this.viewDisabled = false;
+          this.selectData=arr;
         }else{
           this.delDisabled = false;
           this.editDisabled = true;
@@ -154,10 +192,27 @@
         this.formData = Base.getParams($("#menuForm"));
         this.renderTable()
       },
-      add(){
+      openDialog(type){
+        if(type==2){//表示点击的是修改,将selectData中的数据循环放到operateData中
+          this.menuTitle="修改菜单信息";
+          let obj = this.selectData[0];
+          let key;
+          for( key in this.operateData){
+              this.operateData[key]=obj[key];
+          }
+        }else{
+          this.menuTitle="新增菜单信息";
+        }
+        this.addStatus=true;
+      },
+      add(formName){
        //调用保存接口
-
-        this.addStatus=false;
+        this.$refs[formName].validate((valid)=>{
+            if(valid){
+              this.addStatus=false;
+              this.$refs[formName].resetFields();
+            }
+        })
       },
       edit(){
 
@@ -201,9 +256,12 @@
     overflow-x:hidden !important;
   }
   .el-dialog .el-form-item__label{
-    width: 90px;
+    width: 100px;
   }
   .el-dialog .el-input{
     width: 250px;
+  }
+  .addForm .el-form-item__content{
+    margin-left: 100px;
   }
 </style>

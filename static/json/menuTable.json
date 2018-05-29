@@ -5,14 +5,18 @@
     "menuName":"a1",
     "parentMenuName":"dddd",
     "sort":1,
-    "address":"江苏南京"
+    "address":"江苏南京",
+      "menuLevel":"0",
+      "url":"http://www.baidu.com"
     },
     {
       "id":2,
       "menuName":"a2",
       "parentMenuName":"dddd",
       "sort":1,
-      "address":"江苏南京"
+      "address":"江苏南京",
+      "menuLevel":"1",
+      "url":"http://www.baidu.com"
     }
   ],
   "total":10
