@@ -2,31 +2,30 @@
   <div class="tableForm" id="menu">
     <div class="leftTree">
       <el-scrollbar class="page-component_scroll">
-        <el-tree :data="treeData" class="filter-tree"
+        <el-tree :data="treeData" class="filter-tree" node-key="id" ref="tree"
                  default-expand-all
                  highlight-current>
-
         </el-tree>
       </el-scrollbar>
     </div>
     <div class="rightTable">
-      <el-form :inline="true" class="demo-form-inline" id="menuForm" ref="validateForm">
-        <el-form-item label="菜单名称">
-          <el-input v-model="formData.menuName"></el-input>
+      <el-form :inline="true" class="demo-form-inline" id="menuForm" :model="formData" ref="formData" >
+        <el-form-item label="菜单名称" prop="menuName">
+          <el-input v-model="formData.menuName" name="menuName"></el-input>
         </el-form-item>
-        <el-form-item label="上级菜单名称">
-          <el-input v-model="formData.parentMenuName"></el-input>
+        <el-form-item label="上级菜单名称" prop="parentMenuName">
+          <el-input v-model="formData.parentMenuName" name="parentMenuName"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button  type="primary" @click="handleSelect">查询</el-button>
-          <el-button @click="reset('validateForm')">重置</el-button>
+          <el-button @click="reset('formData')">重置</el-button>
         </el-form-item>
       </el-form>
       <div class="tableBox">
         <el-button type="primary" @click="openDialog(1)">新增</el-button>
-        <el-button type="primary" :disabled="delDisabled">删除</el-button>
         <el-button type="primary" :disabled="editDisabled" @click="openDialog(2)">修改</el-button>
-        <el-button type="primary" :disabled="viewDisabled">查看</el-button>
+        <el-button type="primary" :disabled="viewDisabled" @click="view">查看</el-button>
+        <el-button type="primary" :disabled="delDisabled" @click="cancel">删除</el-button>
         <el-table :data="tableData" border  @selection-change="handleSelectionChange">
           <el-table-column type="selection"></el-table-column>
           <el-table-column prop="menuName" label="菜单名称"></el-table-column>
@@ -42,7 +41,7 @@
 
       </div>
     </div>
-    <el-dialog :title="menuTitle" :visible.sync="addStatus" width="30%">
+    <el-dialog :title="menuTitle" :visible.sync="operateStatus" width="30%">
       <el-form class="demo-form-inline addForm" :model="operateData" :rules="rules" ref="addForm">
         <el-form-item label="菜单名称：" prop="menuName">
           <el-input v-model="operateData.menuName" name="menuName"></el-input>
@@ -62,8 +61,28 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="add('addForm')" type="primary">确定</el-button>
+        <el-button @click="operateAndSave('addForm')" type="primary">确定</el-button>
         <el-button @click="reset('addForm')">重置</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="查看菜单信息" :visible.sync="viewStatus" width="30%">
+      <div class="viewMenu">
+        <el-row :gutter="15">
+          <el-col :offset="2" :span="6" class="text">菜单名称：</el-col>
+          <el-col :span="16">{{operateData.menuName}}</el-col>
+        </el-row>
+        <el-row :gutter="15">
+          <el-col :offset="2" :span="6" class="text">菜单级别：</el-col>
+          <el-col :span="16">{{operateData.menuLevel}}</el-col>
+        </el-row>
+        <el-row :gutter="15">
+          <el-col :offset="2" :span="6" class="text">排序：</el-col>
+          <el-col :span="16">{{operateData.sort}}</el-col>
+        </el-row>
+        <el-row :gutter="15">
+          <el-col :offset="2" :span="6" class="text">URL：</el-col>
+          <el-col :span="16">{{operateData.url}}</el-col>
+        </el-row>
       </div>
     </el-dialog>
   </div>
@@ -74,9 +93,12 @@
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
   import ElTable from "../../../node_modules/element-ui/packages/table/src/table";
   import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
-  import Base from  "@/assets/js/base.js"
+  import ElDialog from "../../../node_modules/element-ui/packages/dialog/src/component";
+  import ElRow from "element-ui/packages/row/src/row";
+  import ElCol from "element-ui/packages/col/src/col";
+  import Base from  '../../assets/js/base';
   export default{
-    components: {ElButton, ElTable, ElInput, ElFormItem, ElForm},
+    components: {ElCol, ElRow, ElDialog, ElButton, ElTable, ElInput, ElFormItem, ElForm},
     name:"Menu",
     data(){
       let validateSort = (rule,value,callback) =>{
@@ -133,8 +155,7 @@
         delDisabled:true,
         editDisabled:true,
         viewDisabled:true,
-        addStatus:false,
-        editStatus:false,
+        operateStatus:false,
         viewStatus:false,
         cancelStatus:false,
         selectData:[],
@@ -143,7 +164,6 @@
     },
     mounted:function () {
       this.renderTree();
-      this.renderTable();
     },
     methods:{
       renderTree(){
@@ -151,6 +171,9 @@
           let data = res.body.data;
           let obj = Base.arrayToMap(data);
           this.treeData = Base.mapToArray(obj,0);
+        }).then(()=>{
+          this.$refs.tree.setCurrentKey(this.treeData[0].id);
+          this.renderTable();
         })
       },
       renderTable(page){
@@ -167,8 +190,8 @@
       handleCurrentChange(currentPage){
         this.renderTable(currentPage-1)
       },
-      reset(validateForm){
-        this.$refs[validateForm].resetFields();
+      reset(formData){
+        this.$refs[formData].resetFields();
       },
       handleSelectionChange(arr){
         //根据数组长度来判断选择
@@ -195,33 +218,50 @@
       openDialog(type){
         if(type==2){//表示点击的是修改,将selectData中的数据循环放到operateData中
           this.menuTitle="修改菜单信息";
-          let obj = this.selectData[0];
-          let key;
-          for( key in this.operateData){
-              this.operateData[key]=obj[key];
-          }
+          this.view();
         }else{
           this.menuTitle="新增菜单信息";
         }
-        this.addStatus=true;
+        this.operateStatus=true;
       },
-      add(formName){
-       //调用保存接口
+      operateAndSave(formName){
         this.$refs[formName].validate((valid)=>{
             if(valid){
-              this.addStatus=false;
+              if(this.menuTitle=="新增菜单信息"){
+                //调用新增的保存接口
+              }else {
+                //调用修改的保存接口
+              }
+              this.operateStatus=false;
               this.$refs[formName].resetFields();
             }
         })
       },
-      edit(){
-
-      },
       view(){
-
+        let obj = this.selectData[0];
+        let key;
+        for( key in this.operateData){
+          this.operateData[key]=obj[key];
+        }
+        this.viewStatus=true;
       },
       cancel(){
-
+        //删除
+        this.$confirm('确认删除？','提示',{
+          cancelButtonText:'取消',
+          confirmButtonText:'确定',
+          type:'warning'
+        }).then(()=>{
+            this.$message({
+              type:'success',
+              message:'删除成功！'
+            })
+        }).catch(()=>{
+            this.$message({
+              type:'info',
+              message:'已取消删除'
+            })
+        })
       }
     }
   }
@@ -263,5 +303,8 @@
   }
   .addForm .el-form-item__content{
     margin-left: 100px;
+  }
+  .viewMenu .text{
+    text-align: right;
   }
 </style>

@@ -1,0 +1,21 @@
+{
+  "data":[
+    {
+    "id":1,
+    "deptName":"a1",
+    "deptCode":"1",
+    "deptAlias":1,
+    "parentId":"1",
+     "describe":"wtwtw"
+    },
+    {
+      "id":2,
+      "deptName":"a2",
+      "deptCode":"2",
+      "deptAlias":2,
+      "parentId":"2",
+      "describe":"wrwrt"
+    }
+  ],
+  "total":2
+}

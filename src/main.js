@@ -28,4 +28,4 @@ new Vue({
   //components: { App },
   //template: '<App/>'
   render:h=>h(App)
-})
+});
