@@ -120,4 +120,16 @@ Base.mapToArray = function (data,pid) {
     return self.array;
   }
 };
+Base.validateForm = function (rule,value,callback) { //只验证rules中的validator调用的方法
+  let self = {}; //暂时先只有正则的验证
+  self.type = rule.type;
+  self.reg = rule.reg ? rule.reg:null;
+  self.message = rule.message ? rule.message : "输入错误";
+  if(!self.reg.test(value)){
+    return callback(new Error(self.message));
+  }else{
+    return callback();
+  }
+
+};
 export default Base;

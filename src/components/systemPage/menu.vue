@@ -101,24 +101,6 @@
     components: {ElCol, ElRow, ElDialog, ElButton, ElTable, ElInput, ElFormItem, ElForm},
     name:"Menu",
     data(){
-      let validateSort = (rule,value,callback) =>{
-         //Number.isInteger(value)验证是否输入的是整数
-         let reg=/^(?!0)(?:[0-9]{1,3}|1000)$/;
-
-         if(!reg.test(value)){
-             return callback(new Error("请输入1-1000的正整数"));
-         }else{
-             return callback();
-         }
-      };
-      let validateUrl = (rule,value,callback) =>{
-        let reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-        if(!reg.test(value)){
-            return callback(new Error("请输入正确的url地址"));
-        }else{
-            return callback();
-        }
-      };
       return {
         treeData: [],
         formData:{
@@ -141,13 +123,16 @@
           ],
           sort:[
             {
-                validator:validateSort,trigger:'blur'
-            }//只能输入1000以内的正整数
+              validator:Base.validateForm,trigger:'blur',reg:/^(?!0)(?:[0-9]{1,3}|1000)$/,
+              message:"请输入1-1000的正整数"
+            }
           ],
           url:[
             {required:true,message:"请输入url地址",trigger:'blur'},
             {min:1,max:40,message:"请输入长度不超过40的url地址",trigger:'blur'},
-            {validator:validateUrl,trigger:'blur'}
+            {validator:Base.validateForm,trigger:'blur',message:"请输入正确的url地址",
+              reg:/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/,
+            }
           ]
         },
         tableData:[],
@@ -218,7 +203,7 @@
       openDialog(type){
         if(type==2){//表示点击的是修改,将selectData中的数据循环放到operateData中
           this.menuTitle="修改菜单信息";
-          this.view();
+          this.view(true);
         }else{
           this.menuTitle="新增菜单信息";
         }
@@ -226,24 +211,26 @@
       },
       operateAndSave(formName){
         this.$refs[formName].validate((valid)=>{
-            if(valid){
-              if(this.menuTitle=="新增菜单信息"){
-                //调用新增的保存接口
-              }else {
-                //调用修改的保存接口
-              }
-              this.operateStatus=false;
-              this.$refs[formName].resetFields();
+          if(valid){
+            if(this.menuTitle=="新增菜单信息"){
+              //调用新增的保存接口
+            }else {
+              //调用修改的保存接口
             }
+            this.operateStatus=false;
+            this.$refs[formName].resetFields();
+          }
         })
       },
-      view(){
+      view(flag){
         let obj = this.selectData[0];
-        let key;
-        for( key in this.operateData){
+        for( let key in this.operateData){
           this.operateData[key]=obj[key];
         }
-        this.viewStatus=true;
+        if(!flag){
+          this.viewStatus=true;
+        }
+
       },
       cancel(){
         //删除
@@ -252,15 +239,16 @@
           confirmButtonText:'确定',
           type:'warning'
         }).then(()=>{
-            this.$message({
-              type:'success',
-              message:'删除成功！'
-            })
+          //调用接口
+          this.$message({
+            type:'success',
+            message:'删除成功！'
+          })
         }).catch(()=>{
-            this.$message({
-              type:'info',
-              message:'已取消删除'
-            })
+          this.$message({
+            type:'info',
+            message:'已取消删除'
+          })
         })
       }
     }
