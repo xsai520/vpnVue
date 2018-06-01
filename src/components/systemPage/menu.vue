@@ -41,7 +41,7 @@
 
       </div>
     </div>
-    <el-dialog :title="menuTitle" :visible.sync="operateStatus" width="30%">
+    <el-dialog :title="menuTitle" :visible.sync="operateStatus" width="30%" @close="clearAll('addForm')">
       <el-form class="demo-form-inline addForm" :model="operateData" :rules="rules" ref="addForm">
         <el-form-item label="菜单名称：" prop="menuName">
           <el-input v-model="operateData.menuName" name="menuName"></el-input>
@@ -62,7 +62,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="operateAndSave('addForm')" type="primary">确定</el-button>
-        <el-button @click="reset('addForm')">重置</el-button>
+        <el-button @click="closeDialog()">取消</el-button>
       </div>
     </el-dialog>
     <el-dialog title="查看菜单信息" :visible.sync="viewStatus" width="30%">
@@ -157,7 +157,7 @@
           let obj = Base.arrayToMap(data);
           this.treeData = Base.mapToArray(obj,0);
         }).then(()=>{
-          this.$refs.tree.setCurrentKey(this.treeData[0].id);
+          this.$refs.tree.setCurrentKey(this.treeData[0].id); //选中树的第一个节点
           this.renderTable();
         })
       },
@@ -176,7 +176,7 @@
         this.renderTable(currentPage-1)
       },
       reset(formData){
-        this.$refs[formData].resetFields();
+        this.$refs[formData].resetFields(); //resetFields是将整个重置为初始值不是重置为空
       },
       handleSelectionChange(arr){
         //根据数组长度来判断选择
@@ -201,6 +201,7 @@
         this.renderTable()
       },
       openDialog(type){
+        //进入新增页面的时候应该将this.operateData置空，进入修改页面的时候应该将this.operateData置为selectData的值
         if(type==2){//表示点击的是修改,将selectData中的数据循环放到operateData中
           this.menuTitle="修改菜单信息";
           this.view(true);
@@ -208,6 +209,9 @@
           this.menuTitle="新增菜单信息";
         }
         this.operateStatus=true;
+      },
+      closeDialog(){
+        this.operateStatus=false;
       },
       operateAndSave(formName){
         this.$refs[formName].validate((valid)=>{
@@ -250,6 +254,10 @@
             message:'已取消删除'
           })
         })
+      },
+      clearAll(formData){ //清除所有验证及表格置空
+        this.$refs[formData].clearValidate();
+        Base.clearObj(this.operateData);
       }
     }
   }

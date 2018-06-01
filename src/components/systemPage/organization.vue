@@ -21,8 +21,8 @@
         <el-button type="primary" @click="openOperateModal(1)">新增</el-button>
         <el-button type="primary" :disabled="editDisabled" @click="openOperateModal(2)">修改</el-button>
         <el-button type="primary" :disabled="delDisabled" @click="cancel">删除</el-button>
-        <el-button type="primary">导入</el-button>
-        <el-button type="primary">导出</el-button>
+        <el-button type="primary" @click="importFile">导入</el-button>
+        <el-button type="primary" @click="exportFile">导出</el-button>
         <el-table :data="tableData" border @selection-change="handleSelectionChange">
           <el-table-column prop="id" type="selection"></el-table-column>
           <el-table-column prop="deptName" label="机构名称"></el-table-column>
@@ -38,7 +38,7 @@
         </el-pagination>
       </div>
     </div>
-    <el-dialog :title="orgTitle" :visible.sync="operateStatus" width="30%">
+    <el-dialog :title="orgTitle" :visible.sync="operateStatus" width="30%" @close="clearAll('operateData')">
       <el-form class="demo-form-inline operateForm" :model="operateData" :rules="rules" ref="operateData">
         <el-form-item label="机构名称：" prop="deptName">
           <el-input v-model="operateData.deptName" name="deptName"></el-input>
@@ -59,7 +59,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="saveOperateModal('operateData')" type="primary">确定</el-button>
-        <el-button @click="reset('operateData')">重置</el-button>
+        <el-button @click="closeDialog('operateData')">取消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -83,6 +83,7 @@
             },
             tableData:[],
             selectData:[],
+            selectIds:[],
             total:0,
             delDisabled:true,
             editDisabled:true,
@@ -119,9 +120,19 @@
         }
     },
     mounted:function () {
-      this.renderTable()
+      this.renderTree()
     },
     methods:{
+      renderTree(){
+          this.$http.get("../../static/json/menu.json").then((res)=>{
+            let data = res.body.data;
+            let obj = Base.arrayToMap(data);
+            this.treeData = Base.mapToArray(obj,0);
+        }).then(()=>{
+            this.$refs.tree.setCurrentKey(this.treeData[0].id);
+            this.renderTable();
+          })
+      },
       renderTable(page){ //获取表格
         let params = {
           pageSize:page?page:0,
@@ -138,7 +149,7 @@
           this.renderTable()
       },
       reset(formData){ //重置
-          this.$refs[formData].resetFields()
+          this.$refs[formData].resetFields();
       },
       handleCurrentChange(currentPage){//分页改变
         this.renderTable(currentPage-1)
@@ -146,6 +157,10 @@
       handleSelectionChange(arr){
          //切换checkbox的选择
         this.selectData=[];
+        this.selectIds=[];
+        arr.forEach((val)=>{
+          this.selectIds.push(val.id)
+        });
         //根据数组长度来判断选择
         if(arr.length==0){
           this.delDisabled =  true;
@@ -168,10 +183,14 @@
             this.operateData[key]=obj[key];
           }
         }else{
-          this.reset('operateData');
+          Base.clearObj(this.operateData);
+          //this.reset('operateData');
           this.orgTitle="新增组织机构";
         }
         this.operateStatus=true;
+      },
+      closeDialog(){
+        this.operateStatus=false;
       },
       //保存新增或修改
       saveOperateModal(formName){
@@ -203,10 +222,23 @@
                 message:'已取消删除'
               })
           })
-      }
+      },
       //导入
+      importFile(){
 
+      },
       //导出
+      exportFile(){
+          debugger
+          let ids = this.selectIds.join(",");//checkbox选中的id this.selectIds
+          let fieldId = this.$refs.tree.getCurrentKey();//树选中的id
+          let params = Base.getParams($("#orgForm"));//模糊查询表单值
+        window.location.href = encodeURI(encodeURI(path+"/departController/exporyDepart?deptIds="+ids+"&fieldId="+fieldId+"&deptName="+(params.deptName?params.deptName:'')+"&deptCode="+(params.deptCode?params.deptCode:'')));
+      },
+      clearAll(formData){
+        this.$refs[formData].clearValidate();
+        Base.clearObj(this.operateData);
+      }
     }
   }
 </script>

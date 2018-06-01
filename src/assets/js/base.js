@@ -132,4 +132,13 @@ Base.validateForm = function (rule,value,callback) { //只验证rules中的valid
   }
 
 };
+Base.clearObj = function (obj) {
+  if(obj){
+    for(let key in obj){
+      obj[key]="";
+    }
+    return obj;
+  }
+
+};
 export default Base;
