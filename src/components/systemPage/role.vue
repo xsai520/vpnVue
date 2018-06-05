@@ -1,6 +1,6 @@
 <template>
   <div class="tableForm" id="role">
-    <el-form :inline="true" class="data-form-inline">
+    <el-form :inline="true" class="data-form-inline" ref="formData">
       <el-form-item label="角色名称">
         <el-input v-model="formData.roleName"></el-input>
       </el-form-item>
@@ -8,8 +8,8 @@
         <el-input v-model="formData.parentRole"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button  type="primary">查询</el-button>
-        <el-button>重置</el-button>
+        <el-button  type="primary" @click="handleSelect">查询</el-button>
+        <el-button @click="reset('formData')">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="tableBox">
@@ -41,6 +41,17 @@
                 roleName:"",
                parentRole:""
             }
+        }
+    },
+    mounted:function(){
+
+    },
+    methods:{
+        handleSelect(){
+
+        },
+        reset(formData){
+          this.$refs[formData].resetFields();
         }
     }
   }

@@ -21,8 +21,10 @@
         <el-button type="primary" @click="openOperateModal(1)">新增</el-button>
         <el-button type="primary" :disabled="editDisabled" @click="openOperateModal(2)">修改</el-button>
         <el-button type="primary" :disabled="delDisabled" @click="cancel">删除</el-button>
-        <el-button type="primary" @click="importFile">导入</el-button>
         <el-button type="primary" @click="exportFile">导出</el-button>
+        <el-upload class="upload-demo" action="" :on-preview="handlePreview" :on-remove="handleRemove" :limit="1">
+          <el-button type="primary" @click="importFile">导入</el-button>
+        </el-upload>
         <el-table :data="tableData" border @selection-change="handleSelectionChange">
           <el-table-column prop="id" type="selection"></el-table-column>
           <el-table-column prop="deptName" label="机构名称"></el-table-column>
@@ -71,8 +73,9 @@
   import Base from  '../../assets/js/base';
   import ElDialog from "../../../node_modules/element-ui/packages/dialog/src/component";
   import ElInput from "../../../node_modules/element-ui/packages/input/src/input";
+  import ElUpload from "../../../node_modules/element-ui/packages/upload/src/index";
   export default{
-    components: {ElInput, ElDialog, ElTable, ElFormItem, ElForm},
+    components: {ElUpload, ElInput, ElDialog, ElTable, ElFormItem, ElForm},
     name:"Organization",
     data(){
         return {
@@ -229,7 +232,6 @@
       },
       //导出
       exportFile(){
-          debugger
           let ids = this.selectIds.join(",");//checkbox选中的id this.selectIds
           let fieldId = this.$refs.tree.getCurrentKey();//树选中的id
           let params = Base.getParams($("#orgForm"));//模糊查询表单值
@@ -238,6 +240,12 @@
       clearAll(formData){
         this.$refs[formData].clearValidate();
         Base.clearObj(this.operateData);
+      },
+      handlePreview(){
+
+      },
+      handleRemove(){
+
       }
     }
   }
@@ -274,5 +282,8 @@
   }
   .operateForm .el-form-item__content{
     margin-left: 100px;
+  }
+  .upload-demo{
+    display: inline-block;
   }
 </style>
