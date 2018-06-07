@@ -30,8 +30,9 @@ module.exports = {
       '@': resolve('src'),
     }
   },
-  module: {
-    rules: [
+  module: {  //loader 被用于转换某些类型的模块
+    rules: [   //test 属性 用于标识出应该被对应的loader进行转换的某个或某些文件
+                //use 属性 表示进行转换时，应该用哪个loader
       {
         test: /\.vue$/,
         loader: 'vue-loader',
