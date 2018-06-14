@@ -1,13 +1,13 @@
 define(["jquery", "bootstrap"], function() {
-	Date.prototype.Format = function(fmt) { //author: meizz 
+	Date.prototype.Format = function(fmt) { //author: meizz
 		var o = {
-			"M+": this.getMonth() + 1, //月份 
-			"d+": this.getDate(), //日 
-			"h+": this.getHours(), //小时 
-			"m+": this.getMinutes(), //分 
-			"s+": this.getSeconds(), //秒 
-			"q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-			"S": this.getMilliseconds() //毫秒 
+			"M+": this.getMonth() + 1, //月份
+			"d+": this.getDate(), //日
+			"h+": this.getHours(), //小时
+			"m+": this.getMinutes(), //分
+			"s+": this.getSeconds(), //秒
+			"q+": Math.floor((this.getMonth() + 3) / 3), //季度
+			"S": this.getMilliseconds() //毫秒
 		};
 		if(/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 		for(var k in o)
@@ -156,7 +156,7 @@ define(["jquery", "bootstrap"], function() {
 	base.getRandom = function(min, max) {
 		return Math.round(Math.random() * (max - min) + min);
 	};
-	
+
 	/**随机字符串**/
 	base.getRandomString = function(len){
 		len = len?len:32;
@@ -289,7 +289,7 @@ define(["jquery", "bootstrap"], function() {
 		$(container).html("<div class='ui-loading' style='display:table;width:100%;height:100%;text-align:center;'>" +
 			"<i class='fa fa-spinner fa-pulse fa-3x fa-fw' style='font-size:24px;text-align:center;display: table-cell;vertical-align: middle;width:24px;height:24px;color:#aaa'></i></div>");
 	};
-	
+
 	/**基于handlebars模板组件**/
 	base.template = function(option) {
 		var self = {};
@@ -2123,7 +2123,7 @@ define(["jquery", "bootstrap"], function() {
 			}
 
 		}
-		/*		
+		/*
 				return $(obj).filter(":checked");*/
 	};
 	/**获取选中的checkbox或radio**/
@@ -2144,14 +2144,14 @@ define(["jquery", "bootstrap"], function() {
 		$(eles).each(function(i, o) {
 			$(o).prop("checked", false);
 		});
-		if(data){ 
-	         if(typeof(data).toLowerCase()!='object'){ 
-	            $(eles).filter("[value='" + data + "']").prop("checked", true); 
-	         }else{ 
-	            for(var i=0;i<data.length;i++){ 
-	               $(eles).filter("[value='" + data[i] + "']").prop("checked", true); 
-	            } 
-	         } 
+		if(data){
+	         if(typeof(data).toLowerCase()!='object'){
+	            $(eles).filter("[value='" + data + "']").prop("checked", true);
+	         }else{
+	            for(var i=0;i<data.length;i++){
+	               $(eles).filter("[value='" + data[i] + "']").prop("checked", true);
+	            }
+	         }
       	}
 	};
 	/**全选checkbox**/
@@ -3014,12 +3014,12 @@ define(["jquery", "bootstrap"], function() {
 				xhr.onreadystatechange = function(){
 					if(xhr.readState==4){
 					        if(xmlhttp.status==200){
-					           
-					            var message=xmlhttp.responseText;   
-					             
-					          
-					         }   
-					 }  
+
+					            var message=xmlhttp.responseText;
+
+
+					         }
+					 }
 				};
 				xhr.open("post", self.url+base.form.paramsToString(self.params), true);
 				xhr.responseType ="blob";
@@ -3191,7 +3191,7 @@ define(["jquery", "bootstrap"], function() {
 			var iname = role.text ? role.text : $(obj).attr("name");
 			if($(obj).is(":hidden")){return;}
 			for(var key in role) {
-				
+
 				switch(key) {
 					case "required": //是否必填
 
@@ -3401,7 +3401,7 @@ define(["jquery", "bootstrap"], function() {
 						}
 						break;
 
-					case "money": //货币 
+					case "money": //货币
 						var ex = /^\d+.?\d{0,2}$/;
 						var val = $(obj).val();
 						if(!val || val == "") {
@@ -3418,7 +3418,7 @@ define(["jquery", "bootstrap"], function() {
 							}
 						}
 					break;
-					
+
 					case "mobile_telephone"://手机+普通电话
 						errorText = "电话号码不正确";
 						var ex = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -3430,9 +3430,9 @@ define(["jquery", "bootstrap"], function() {
 						if(!ex.test(val)&&!ex2.test(val)) {
 							hasError = self.error(role, errorText, obj);
 						}
-						
+
 					break;
-					
+
 					case "mobile": //手机号
 						errorText = "手机号码不正确";
 						var ex = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -3445,7 +3445,7 @@ define(["jquery", "bootstrap"], function() {
 						}
 						break;
 
-					case "telephone": //普通电话 
+					case "telephone": //普通电话
 						errorText = "电话号码不正确";
 						//var ex = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
 						var ex = /^0\d{2,3}-?\d{7,8}$/;
@@ -3694,7 +3694,7 @@ define(["jquery", "bootstrap"], function() {
 	base.form.reset = function(form, callback) {
 		/*if(form) {
 			$(form)[0].reset();
-			
+
 			if(callback) {
 				callback(form);
 			}
@@ -4335,7 +4335,7 @@ define(["jquery", "bootstrap"], function() {
 		self.editorEntity = null;
 		self.create = function(){
 			require(["editor"],function(){
-				
+
 				KindEditor.ready(function(e) {
 					self.editorEntity = e.create("textarea[name='"+self.name+"']", {allowFileManager : true});
 				});
@@ -4343,7 +4343,7 @@ define(["jquery", "bootstrap"], function() {
 		};
 		self.create();
 	};
-	
+
 	/**echarts封装**/
 	base.echarts = function(option) {
 		var self = {};
@@ -4607,7 +4607,7 @@ define(["jquery", "bootstrap"], function() {
 				if(self.filter) {
 					self.option.ajax.dataFilter = self.filter;
 				}
-				
+
 				self.grid = $(self.container).DataTable(self.option);
 			}
 
@@ -4615,7 +4615,7 @@ define(["jquery", "bootstrap"], function() {
 		self.setInputRedirect = function(){
 			var pageContainer = $(self.container).parent();
 			$(pageContainer).find(".inputRedirect").remove();
-			
+
 			var inputRedirectContainer = document.createElement("span");
 			$(inputRedirectContainer).addClass("inputRedirect")
 			$(pageContainer).append(inputRedirectContainer);
@@ -4634,7 +4634,7 @@ define(["jquery", "bootstrap"], function() {
      						self.grid.page(number).draw( false );
      					}
 					}
-					
+
 					e.element.stopPropagation();
 					return false;
 				}
@@ -4779,7 +4779,7 @@ define(["jquery", "bootstrap"], function() {
 						if(o.pid == pid) {
 							self.map[o.id] = o;
 							if(pid == self.pid) {
-								n++;
+								n++; //n 每增加一次表示得到一个一级的元素
 							}
 							k++;
 							if(firstActive) {
@@ -4787,7 +4787,7 @@ define(["jquery", "bootstrap"], function() {
 									self.map[o.id].active = true;
 								}
 							}
-							
+
 							self.transform(o.id);
 						}
 
@@ -4986,7 +4986,7 @@ define(["jquery", "bootstrap"], function() {
 				var node = self.selectNode(self.treeObj.getNodeByParam(self.selectNodeId),self.treeObj);
 				self.treeObj.expandNode(node, true, false);
 			}
-			
+
 		};
 		self.destroy = function(){
 			self.treeObj.destroy();
@@ -5372,7 +5372,7 @@ define(["jquery", "bootstrap"], function() {
 			$(self.pull).css("float", "left");
 			$(self.pull).css("width", self.width);
 			$(self.pull).css("height", self.height);
-			
+
 			$(self.pull).css("position", "absolute");
 			$(self.pull).css("text-align", "center");
 			$(self.pull).css("cursor", "pointer");
@@ -5384,7 +5384,7 @@ define(["jquery", "bootstrap"], function() {
 			}else{
 				$(self.pull).css("background-color", self.bg);
 				$(self.pull).css("border", "1px solid "+self.border);
-				
+
 			}
 			$(self.pull).css("color", self.color);
 			$(self.pull).attr("type","pull");
@@ -5395,14 +5395,14 @@ define(["jquery", "bootstrap"], function() {
 				}else{
 					$(this).css("background-color", self.hoverBg);
 				}
-				
+
 			}, function() {
 				if(self.pullbtn){
 					$(this).css("background-position","0px 0px");
 				}else{
 					$(this).css("background-color", self.bg);
 				}
-				
+
 			});
 			$(self.pull).css("z-index", "1000");
 			$(self.container).parent().parent().append(self.pull);
@@ -6015,10 +6015,10 @@ define(["jquery", "bootstrap"], function() {
 		self.pageItem = null;
 		self.isUnique = option.isUnique == true ? true : false;
 		self.pageGroup = null;
-		
+
 		self.load = function() {
 			if(self.container.length > 0) {
-				
+
 				if($(self.container).children(".ui-page-group").length==0){
 					self.pageGroup = document.createElement("div");
 					$(self.pageGroup).addClass("ui-page-group");
@@ -6154,7 +6154,7 @@ define(["jquery", "bootstrap"], function() {
 		self.createTabItem = function(data) {
 			if(!data){return;}
 			var tabItem = document.createElement("li");
-			
+
 			if(data.imageIcon) {
 				$(tabItem).append("<img src='" + data.imageIcon + "'/>");
 			}
@@ -6281,7 +6281,7 @@ define(["jquery", "bootstrap"], function() {
 					container:$(body)
 				});
 			}
-			
+
 		};
 		self.setEvent = function(){
 			self.show();
@@ -6304,7 +6304,7 @@ define(["jquery", "bootstrap"], function() {
 				}
 			});
 		};
-		
+
 		self.hide = function(){
 			$(self.accordion).on('hide.bs.collapse', function (d) {
 				if(self.hideEvent){
@@ -6312,7 +6312,7 @@ define(["jquery", "bootstrap"], function() {
 				}
 			});
 		};
-		
+
 		self.hidden = function(){
 			$(self.accordion).on('hidden.bs.collapse', function (d) {
 				if(self.hiddenEvent){
@@ -6320,31 +6320,31 @@ define(["jquery", "bootstrap"], function() {
 				}
 			});
 		};
-		
+
 		self.create();
 		return self;
 	};
 	/**UTF-16 转 UTF-8**/
-	base.utf16to8 = function(str) {  
-	    var out, i, len, c;  
-	    out = "";  
-	    len = str.length;  
-	    for(i = 0; i < len; i++) {  
-	    c = str.charCodeAt(i);  
-	    if ((c >= 0x0001) && (c <= 0x007F)) {  
-	        out += str.charAt(i);  
-	    } else if (c > 0x07FF) {  
-	        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));  
-	        out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));  
-	        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));  
-	    } else {  
-	        out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));  
-	        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));  
-	    }  
-	    }  
-	    return out;  
+	base.utf16to8 = function(str) {
+	    var out, i, len, c;
+	    out = "";
+	    len = str.length;
+	    for(i = 0; i < len; i++) {
+	    c = str.charCodeAt(i);
+	    if ((c >= 0x0001) && (c <= 0x007F)) {
+	        out += str.charAt(i);
+	    } else if (c > 0x07FF) {
+	        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+	        out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
+	        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+	    } else {
+	        out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
+	        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
+	    }
+	    }
+	    return out;
 	};
-	
+
 	/**二维码生成器组件,基于canvas，ie9以下浏览器不支持**/
 	base.qrcode = function(option){
 		var self = {};

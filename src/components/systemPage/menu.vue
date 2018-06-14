@@ -1,7 +1,9 @@
 <template>
 <div class="tableForm" id="menu">
   <div class="leftTree">
-    <el-tree :data="treeData" class="filter-tree" default-expand-all></el-tree>
+    <el-scrollbar class="page-component_scroll">
+      <el-tree :data="treeData" class="filter-tree" default-expand-all></el-tree>
+    </el-scrollbar>
   </div>
   <div class="rightTable">
     <el-form :inline="true" class="demo-form-inline">
@@ -50,41 +52,7 @@
     name:"Menu",
       data(){
         return {
-          treeData: [{
-            id: 1,
-            label: '一级 1',
-            children: [{
-              id: 4,
-              label: '二级 1-1',
-              children: [{
-                id: 9,
-                label: '三级 1-1-1'
-              }, {
-                id: 10,
-                label: '三级 1-1-2'
-              }]
-            }]
-          }, {
-            id: 2,
-            label: '一级 2',
-            children: [{
-              id: 5,
-              label: '二级 2-1'
-            }, {
-              id: 6,
-              label: '二级 2-2'
-            }]
-          }, {
-            id: 3,
-            label: '一级 3',
-            children: [{
-              id: 7,
-              label: '二级 3-1'
-            }, {
-              id: 8,
-              label: '二级 3-2'
-            }]
-          }],
+          treeData: [],
           formData:{
             menuName:"",
             parentMenuName:""
@@ -108,7 +76,9 @@
         renderTree(){
             this.$http.get("../../static/json/menu.json").then((res)=>{
               let data = res.body.data;
-              Base.tree(data,0);
+              let obj = Base.arrayToMap(data);
+              this.treeData = Base.mapToArray(obj,0);
+
             })
         },
         renderTable(){
@@ -137,5 +107,12 @@
   .el-pagination{
     float: right;
     margin-top:10px ;
+  }
+  /*设置滚动条*/
+  .page-component_scroll{
+    height: 100%;
+  }
+  .el-scrollbar__wrap{
+    overflow-y: scroll !important;
   }
 </style>

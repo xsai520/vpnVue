@@ -258,8 +258,7 @@
   .page-component_scroll{
     height: 100%;
   }
-  .page-component_scroll .el-scrollbar_wrap{
-    overflow-x: hidden;
-    /*overflow-y: auto;*/
+  .el-scrollbar__wrap{
+    overflow-y: scroll !important;
   }
 </style>

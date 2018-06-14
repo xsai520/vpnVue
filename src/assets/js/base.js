@@ -77,21 +77,47 @@ Base.getParams = function(form,isStr){//isStr 表示是否拼接成字符串
   return params;
 };
 //一般的做法是将一级数组取出，然后循环数组，找出其中pid是一级数组id的
-Base.tree = function (data,pid) {
-  let self={};
-  self.data = data ? data : null;
-  self.array = [];
-  self.pid = pid ? pid:null;
-  if(self.data && self.pid){
-    self.transform = function (pid) {
-       data.map(function(val,index,arr){
-         if(pid==val.id){
-           self.array.push(val);
-           self.transform(val.id)
-         }
-       })
+//先转换为map对象，将id作为key值
+Base.arrayToMap = function (data) {
+  let self = {};
+  self.data = data?data:null;
+  self.map = {};
+  if(self.data && self.data.length>0){
+    self.transform = function () {
+      self.data.forEach(function (val,index) {
+        self.map[val.id] = val;
+      })
     }
-    self.transform(pid)
+  }
+  self.transform();
+  return self.map;
+};
+Base.mapToArray = function (data,pid) {
+  let self = {};
+  self.data = data ? data : null;
+  self.pid = (pid==0 || pid) ? pid : null;
+  self.array = [];
+  if(self.data && (self.pid==0 || self.pid)){
+    self.transform = function (pid,node) {
+      for(let key in self.data){
+        let nodeData = self.data[key];
+        if(nodeData.pid ==pid){
+          if(node){ //node不存在时表示第一次调用
+            if(!node.children){
+              node.children=[];
+            }
+            node.children.push(nodeData);
+            self.transform(nodeData.id,nodeData)
+          }else{
+            self.array.push(nodeData);
+            self.transform(nodeData.id,nodeData)
+          }
+        }
+
+      }
+    };
+    self.transform(pid);
+    return self.array;
   }
 };
 export default Base;
