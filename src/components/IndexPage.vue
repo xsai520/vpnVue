@@ -260,5 +260,6 @@
   }
   .el-scrollbar__wrap{
     overflow-y: scroll !important;
+    overflow-x:hidden !important;
   }
 </style>
