@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "base": "^3.0.0",
     "echarts": "^4.0.4",
     "element-ui": "^2.3.3",
     "jquery": "^3.3.1",
