@@ -13,7 +13,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 //用来把webpack的错误和日志收集起来，漂亮的展示给用户
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const portfinder = require('portfinder')
+const portfinder = require('portfinder')//搜索端口
 //process返回一个包含用户环境信息的对象
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -79,7 +79,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
-
+//webpack将运行由配置文件导出的函数，并且等待promise返回，便于需要异步地加载所需的配置变量。
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
   portfinder.getPort((err, port) => {
@@ -92,11 +92,11 @@ module.exports = new Promise((resolve, reject) => {
       devWebpackConfig.devServer.port = port
 
       // Add FriendlyErrorsPlugin
-      devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
+      devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({ //出错友好处理插件
         compilationSuccessInfo: {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
-        onErrors: config.dev.notifyOnErrors
+        onErrors: config.dev.notifyOnErrors //如果出错就执行这块,其实是utils里面配置好的提示信息
         ? utils.createNotifierCallback()
         : undefined
       }))
