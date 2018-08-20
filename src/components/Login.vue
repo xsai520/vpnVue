@@ -1,15 +1,19 @@
 <template>
-
+  <div>
+    {{aa}}
+  </div>
 </template>
 <style>
 
 </style>
 
 <script>
-    new Vue({
-        el: "#app",
-        data(){
-
+    export default{
+      name:"Login",
+      data(){
+        return{
+          aa:this.$store.state.count
         }
-    })
+      }
+    }
 </script>

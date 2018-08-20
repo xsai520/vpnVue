@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import IndexPage from '@/components/IndexPage'
+import Login from '@/components/Login'
 import Home from '@/components/homePage/Home'//首页
 import Alarm from '@/components/logPage/alarm'
 import Operate from '@/components/logPage/operate'//日志管理
@@ -26,6 +27,11 @@ Vue.use(Router);
 //IndexPage是整体框架的组件 嵌套的路由
 export default new Router({
   routes: [
+    {
+      path:'/',
+      hidden: true,
+      redirect: { path: '/Login' }
+    },
     {
       path:'/',
       hidden: true,

@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="title">运行状态</div>
+    <div class="title">运行状态{{count}} <button @click="aa()">+</button></div>
     <div class="explain">
       系统共有16G内存，8核处理器，500G硬盘
     </div>
@@ -28,6 +28,7 @@
     name:"Home",
     data(){
       return {
+        count:this.$store.state.count,
         commonOption:{},
         memoryChart:{},
         cpuChart:{},
@@ -66,7 +67,15 @@
         ]
       }
     },
+    computed:{
+      count () {
+        return this.$store.state.count
+      }
+    },
     methods:{
+        aa(){
+            this.$store.commit('increment')
+        },
         getMemory(){
           let memory = echarts.init(document.getElementById("memory"));
           memory.setOption(this.commonOption);
@@ -132,5 +141,5 @@
     width: 100%;
     height: 100%;
   }
-  
+
 </style>
