@@ -6,7 +6,6 @@ const path = require('path')
 //生产环境编译环境下的一些配置
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',//静态资源文件夹
     assetsPublicPath: '/',//发布路径
@@ -14,8 +13,8 @@ module.exports = {
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,//是否自动打开浏览器
+    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    autoOpenBrowser: true,//是否自动打开浏览器
     errorOverlay: true,//查询错误
     notifyOnErrors: true,//通知错误
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-

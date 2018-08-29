@@ -24,11 +24,18 @@ const i18n = new VueI18n({
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
+//创建和挂载根实例 通过router配置参数注入路由 从而让整个应用都有路由功能
 new Vue({
   el: '#app',
-  router,
+  router,//缩写 相当于 routers:routers
   store,
   //components: { App },
   //template: '<App/>'
   render:h=>h(App)
 });
+//注入路由之后，现在
+// 可以在任何组件内通过this.$router访问路由器，
+//也可以通过this.$route 访问当前路由
+//复用组件时，想对路由参数的变化作出响应的话，可以用watch监测$router对象
+//或者用beforeRouterUpdate
+

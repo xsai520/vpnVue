@@ -68,8 +68,8 @@
       }
     },
     computed:{
-      count () {
-        return this.$store.state.count
+      bb () {
+        return this.$store.state.count;
       }
     },
     methods:{

@@ -1,3 +1,4 @@
+//定义路由组件
 import Vue from 'vue'
 import Router from 'vue-router'
 import IndexPage from '@/components/IndexPage'
@@ -25,12 +26,13 @@ import SetRestore from '@/components/reductionAndBackups/setRestore.vue'
 import SystemUpgrade from '@/components/reductionAndBackups/systemUpgrade.vue'//还原与备份
 Vue.use(Router);
 //IndexPage是整体框架的组件 嵌套的路由
+//定义路由 每个路由映射一个组件
 export default new Router({
   routes: [
     {
       path:'/',
       hidden: true,
-      redirect: { path: '/Login' }
+      // redirect: { path: '/Login' }
     },
     {
       path:'/',

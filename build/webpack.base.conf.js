@@ -94,7 +94,7 @@ module.exports = {
     child_process: 'empty'
   },
   plugins:[
-    new OpenBrowserPlugin({url:'http://localhost:8080'}),
+   // new OpenBrowserPlugin({url:'http://localhost:8080'}),
     new webpack.optimize.CommonsChunkPlugin('common.js'),//默认会把所有入口节点的公共代码提取出来,生成一个common.js
     new webpack.ProvidePlugin({
       jQuery:"jquery",
